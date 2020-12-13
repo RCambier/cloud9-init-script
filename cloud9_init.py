@@ -15,8 +15,12 @@ def set_idle_termination(idle_hours=1):
         import boto3
         import requests  
     except ImportError:
-        from pip._internal import main as pip
-        pip(['install', 'boto3', 'requests'])
+        import pip
+        pip.main(['install', '--user', 'boto3', 'requests'])
+    finally:
+        import site
+        from importlib import reload
+        reload(site)
         import boto3
         import requests  
     
