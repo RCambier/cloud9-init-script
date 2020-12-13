@@ -14,8 +14,18 @@ def set_idle_termination(idle_hours=1):
     subprocess.run(
         f"{sys.executable} -m pip install boto3 requests", shell=True, check=True
     )
-    import boto3
-    import requests
+    try:
+        import boto3
+        import requests  
+    except ImportError:
+        from pip._internal import main as pip
+        pip(['install', '--user', 'boto3', 'requests'])
+        import boto3
+        import requests  
+    
+
+    
+    print(f"Setting the auto-shutdown alarm...")
 
     client = boto3.client("cloudwatch")
     aws_region = requests.get(
@@ -144,10 +154,10 @@ if __name__ == "__main__":
     if conda_install:
         install_conda()
     set_idle_alarm = (
-        input("Do you want to set an auto-shutdown based on CPU ? [y/n] ")
+        input("Do you want to set an auto-shutdown based on CPU ? [y/n]")
         .lower()
         .startswith("y")
     )
     if set_idle_alarm:
         set_idle_termination()
-    print(f"Done with init_script.")
+    print(f"Done with init script.")
