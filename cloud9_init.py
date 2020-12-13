@@ -11,15 +11,12 @@ import sys
 
 def set_idle_termination(idle_hours=1):
     """Set an alarm to terminate the current EC2 after `idle_hours` of idle time."""
-    subprocess.run(
-        f"{sys.executable} -m pip install boto3 requests", shell=True, check=True
-    )
     try:
         import boto3
         import requests  
     except ImportError:
         from pip._internal import main as pip
-        pip(['install', '--user', 'boto3', 'requests'])
+        pip(['install', 'boto3', 'requests'])
         import boto3
         import requests  
     
