@@ -5,6 +5,6 @@ This script helps quickly setup a Cloud9 instance by
 - Resizing the instance 
 
 # Running it
-```python3
+```bash
 python3 init_script.py
 ```
