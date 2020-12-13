@@ -154,7 +154,7 @@ if __name__ == "__main__":
     if conda_install:
         install_conda()
     set_idle_alarm = (
-        input("Do you want to set an auto-shutdown based on CPU ? [y/n]")
+        input("Do you want to set an auto-shutdown based on CPU ? [y/n] ")
         .lower()
         .startswith("y")
     )
