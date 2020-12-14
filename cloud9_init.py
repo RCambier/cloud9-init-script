@@ -73,14 +73,14 @@ conda init""",
     )
 
 
-def resize_instance(new_size):
+def resize_instance(new_size=20):
     """Resize the instance to the desired size"""
     print(f"Resizing instance to {new_size} GB...")
     # From https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html
-    RESIZE_SCRIPT = """#!/bin/bash
+    RESIZE_SCRIPT = f"""#!/bin/bash
 
     # Specify the desired volume size in GiB as a command-line argument. If not specified, default to 20 GiB.
-    SIZE=${1:-20}
+    SIZE={new_size}
 
     # Get the ID of the environment host Amazon EC2 instance.
     INSTANCEID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
@@ -147,7 +147,7 @@ if __name__ == "__main__":
         .startswith("y")
     )
     if disk_resize:
-        new_size = input("Which size do you want to resize to, in GB? ")
+        new_size = input("Which size do you want to resize to, in GB? (default to 20GB) ")
         resize_instance(new_size)
     conda_install = (
         input("Do you want to install miniconda ? [y/n] ").lower().startswith("y")
