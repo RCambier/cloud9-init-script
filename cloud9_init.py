@@ -77,7 +77,7 @@ def resize_instance(new_size=20):
     """Resize the instance to the desired size"""
     print(f"Resizing instance to {new_size} GB...")
     # From https://docs.aws.amazon.com/cloud9/latest/user-guide/move-environment.html
-    RESIZE_SCRIPT = f"""#!/bin/bash
+    RESIZE_SCRIPT = fr"""#!/bin/bash
 
     # Specify the desired volume size in GiB as a command-line argument. If not specified, default to 20 GiB.
     SIZE={new_size}
