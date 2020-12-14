@@ -11,3 +11,4 @@ When entering a new empty cloud9 environment, simply do
 wget https://raw.githubusercontent.com/RCambier/cloud9-init-script/main/cloud9_init.py
 python3 cloud9_init.py
 ```
+The script will then ask you if you want to resize, if you want to install conda and if you want to setup an auto-shutdown alarm.
