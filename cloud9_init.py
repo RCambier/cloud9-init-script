@@ -9,8 +9,8 @@ import subprocess
 import sys
 
 
-def set_idle_termination(idle_hours=1):
-    """Set an alarm to terminate the current EC2 after `idle_hours` of idle time."""
+def set_idle_stopping(idle_hours=1):
+    """Set an alarm to stop the current EC2 after `idle_hours` of idle time."""
     try:
         import boto3
         import requests  
@@ -160,5 +160,5 @@ if __name__ == "__main__":
         .startswith("y")
     )
     if set_idle_alarm:
-        set_idle_termination()
+        set_idle_stopping()
     print(f"Done with init script.")
