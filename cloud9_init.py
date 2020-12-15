@@ -26,7 +26,7 @@ def set_idle_termination(idle_hours=1):
     
 
     
-    print(f"Setting the auto-shutdown alarm...")
+    print(f"Setting the auto-stopping alarm...")
 
     client = boto3.client("cloudwatch")
     aws_region = requests.get(
@@ -38,9 +38,9 @@ def set_idle_termination(idle_hours=1):
     ).text
     response = client.put_metric_alarm(
         AlarmName=f"cloud9-idle-monitor-{aws_instance_id}",
-        AlarmDescription="Terminate cloud9 machine when CPU is idle.",
+        AlarmDescription="Stop cloud9 machine when CPU is idle.",
         AlarmActions=[
-            f"arn:aws:swf:{aws_region}:{aws_account_id}:action/actions/AWS_EC2.InstanceId.Terminate/1.0",
+            f"arn:aws:swf:{aws_region}:{aws_account_id}:action/actions/AWS_EC2.InstanceId.Stop/1.0",
         ],
         MetricName="CPUUtilization",
         Namespace="AWS/EC2",
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     if conda_install:
         install_conda()
     set_idle_alarm = (
-        input("Do you want to set an auto-shutdown based on CPU ? [y/n] ")
+        input("Do you want to set an auto-stopping based on CPU ? [y/n] ")
         .lower()
         .startswith("y")
     )
