@@ -13,19 +13,19 @@ def set_idle_stopping(idle_hours=1):
     """Set an alarm to stop the current EC2 after `idle_hours` of idle time."""
     try:
         import boto3
-        import requests  
+        import requests
     except ImportError:
         import pip
-        pip.main(['install', '--user', 'boto3', 'requests'])
+
+        pip.main(["install", "--user", "boto3", "requests"])
     finally:
         import site
         from importlib import reload
+
         reload(site)
         import boto3
-        import requests  
-    
+        import requests
 
-    
     print(f"Setting the auto-stopping alarm...")
 
     client = boto3.client("cloudwatch")
@@ -48,9 +48,11 @@ def set_idle_stopping(idle_hours=1):
         Dimensions=[
             {"Name": "InstanceId", "Value": aws_instance_id},
         ],
-        Period=3600,
+        Period=360,
+        EvaluationPeriods=10 * idle_hours,
+        DatapointsToAlarm=10,
+        TreatMissingData="notBreaching",
         Unit="Percent",
-        EvaluationPeriods=idle_hours,
         Threshold=2,
         ComparisonOperator="LessThanThreshold",
     )
@@ -147,7 +149,9 @@ if __name__ == "__main__":
         .startswith("y")
     )
     if disk_resize:
-        new_size = input("Which size do you want to resize to, in GB? (default to 20GB) ")
+        new_size = input(
+            "Which size do you want to resize to, in GB? (default to 20GB) "
+        )
         resize_instance(new_size)
     conda_install = (
         input("Do you want to install miniconda ? [y/n] ").lower().startswith("y")
